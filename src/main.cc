@@ -25,17 +25,15 @@ int main (int argc, char **argv)
     items.prune (db.size () * min_support);
 
     fpt::fptree tree (items.get_ordered (), db);
+    fpt::fptree::stats stats = tree.get_stats ();
 
-    std::cout << "File: " << filename << std::endl
-              << "Number of nodes: " << tree.size () << std::endl
-              << "Number of leaves:" << tree.n_leaves () << std::endl
-              << "Height: " << tree.height () << std::endl;
-
-    fpt::fptree::fanout_stats stats = tree.fanout_stats ();
-
-    std::cout << "Minimum fanout: " << stats.min << std::endl
-              << "Average fanout: " << stats.average << std::endl
-              << "Maximum fanout: " << stats.max << std::endl
+    std::cout << "File: "               << filename             << std::endl
+              << "Number of nodes: "    << stats.size           << std::endl
+              << "Number of leaves:"    << stats.n_leaves       << std::endl
+              << "Height: "             << stats.height         << std::endl
+              << "Minimum fanout: "     << stats.min_fanout     << std::endl
+              << "Average fanout: "     << stats.average_fanout << std::endl
+              << "Maximum fanout: "     << stats.max_fanout     << std::endl;
 
     return 0;
 }
