@@ -11,3 +11,4 @@
 /missing
 *.o
 /fptree
+/datasets/*.fptree
