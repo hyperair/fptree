@@ -13,6 +13,7 @@ namespace fpt
 
     public:
         void prune (std::size_t min_count);
+        void insert (fpt::item_type i) {++(*this)[i];}
 
         using container_type::iterator;
         using container_type::const_iterator;

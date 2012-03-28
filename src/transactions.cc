@@ -13,7 +13,7 @@ fpt::itemset transaction_database::extract_itemset () const
     fpt::itemset items;
 
     for (const transaction &i : *this)
-        for (item_type &j : i)
+        for (const item_type &j : i)
             items.insert (j);
 
     return items;
