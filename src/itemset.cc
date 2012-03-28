@@ -11,3 +11,13 @@ void itemset::prune (std::size_t min_count)
         else
             ++i;
 }
+
+fpt::ordered_itemset itemset::get_ordered () const
+{
+    ordered_itemset ordered_items;
+
+    for (const auto &i : *this)
+        ordered_items.insert ({i.first, i.second});
+
+    return ordered_items;
+}
