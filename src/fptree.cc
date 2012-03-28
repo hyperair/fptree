@@ -1,4 +1,5 @@
 #include <unordered_set>
+#include <limits>
 #include <cassert>
 #include <fptree.hh>
 #include <memory>
@@ -16,7 +17,6 @@ public:
     nodeptr operator[] (item_type);
     void increment_count ()         {++counter;}
 
-private:
     item_type                               item;
     std::size_t                             counter;
 
@@ -76,11 +76,47 @@ fptree::fptree (const ordered_itemset &item_order,
     }
 }
 
+namespace {
+    void traverse (const fptree::nodeptr &current_node, std::size_t height,
+                   fptree::stats &stats, std::size_t &total_fanout)
+    {
+        ++stats.size;
+
+        if (current_node->children.empty ()) { // leaf
+            ++stats.n_leaves;
+            stats.height = std::max (stats.height, height);
+        } else {
+            std::size_t fanout = current_node->children.size ();
+
+            stats.min_fanout = std::min (stats.min_fanout, fanout);
+            stats.max_fanout = std::max (stats.max_fanout, fanout);
+            total_fanout += fanout;
+
+            for (const auto &i : current_node->children)
+                traverse (i.second, height + 1, stats, total_fanout);
+        }
+    }
+}
+
 fptree::stats fptree::get_stats () const
 {
     fptree::stats stats;
+    std::size_t total_fanout = 0;
 
-    // TODO: Implement
+    for (const auto &i : roots)
+        traverse (i.second, 1, stats, total_fanout);
+
+    stats.average_fanout = double (total_fanout) / stats.size;
 
     return stats;
 }
+
+
+fptree::stats::stats () :
+    size (0),
+    n_leaves (0),
+    height (0),
+    min_fanout (std::numeric_limits<decltype (min_fanout)>::max ()),
+    average_fanout (0),
+    max_fanout (0)
+{}

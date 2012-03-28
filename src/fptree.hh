@@ -18,6 +18,8 @@ namespace fpt
 
         struct stats
         {
+            stats ();
+
             std::size_t size;
             std::size_t n_leaves;
             std::size_t height;
@@ -29,10 +31,10 @@ namespace fpt
 
         stats get_stats () const;
 
-    private:
         class node;
         typedef std::shared_ptr<node> nodeptr;
 
+    private:
         const ordered_itemset                  &item_order;
         std::unordered_map<item_type, nodeptr>  roots;
 
