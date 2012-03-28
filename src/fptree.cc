@@ -37,9 +37,9 @@ fptree::nodeptr fptree::node::operator[] (item_type item)
 }
 
 
-fptree::fptree (const ordered_itemset &item_order,
+fptree::fptree (ordered_itemset items,
                 transaction_database &db) :
-    item_order (item_order)
+    item_order (std::move (items))
 {
     for (const transaction &trans : db) {
         nodeptr current;

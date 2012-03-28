@@ -15,7 +15,7 @@ namespace fpt
     class fptree
     {
     public:
-        fptree (const ordered_itemset &items,
+        fptree (ordered_itemset items,
                 transaction_database &db);
         fptree (const fptree &) = delete;
 
@@ -38,7 +38,7 @@ namespace fpt
         typedef std::shared_ptr<node> nodeptr;
 
     private:
-        const ordered_itemset                  &item_order;
+        const ordered_itemset                   item_order;
         std::unordered_map<item_type, nodeptr>  roots;
 
         struct header
