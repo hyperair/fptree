@@ -3,6 +3,7 @@
 #include <cassert>
 #include <fptree.hh>
 #include <memory>
+#include <sstream>
 
 using fpt::fptree;
 
@@ -130,15 +131,21 @@ fptree::stats::stats () :
 
 std::ostream &fpt::operator<< (std::ostream &out, const fptree::node &node)
 {
-    out << node.item << ',' << node.counter << std::endl << " {" << std::endl;
+    out << node.item << ',' << node.counter << std::endl << '{' << std::endl;
+
+    std::stringstream ss;
     for (const auto &i : node.item_order) {
         auto j = node.children.find (i.item);
 
         if (j != node.children.end ()) {
             assert (j->second);
-            out << *j->second;
+            ss << *j->second;
         }
     }
+
+    std::string line;
+    while (getline (ss, line))
+        out << "    " << line << std::endl;
 
     out << "}" << std::endl;
 
@@ -149,14 +156,19 @@ std::ostream &fpt::operator<< (std::ostream &out, const fptree &tree)
 {
     out << "{" << std::endl;
 
+    std::stringstream ss;
     for (const auto &i : tree.item_order) {
         auto j = tree.roots.find (i.item);
 
         if (j != tree.roots.end ()) {
             assert (j->second);
-            out << *j->second;
+            ss << *j->second;
         }
     }
+
+    std::string line;
+    while (getline (ss, line))
+        out << "    " << line << std::endl;
 
     out << "}" << std::endl;
 
