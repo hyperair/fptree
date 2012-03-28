@@ -121,3 +121,20 @@ fptree::stats::stats () :
     average_fanout (0),
     max_fanout (0)
 {}
+
+
+std::ostream &fpt::operator<< (std::ostream &out, const fptree::node &node)
+{
+    for (const auto &i : node.children)
+        out << *i.second;
+
+    return out << node.item << " " << node.counter << std::endl;
+}
+
+std::ostream &fpt::operator<< (std::ostream &out, const fptree &tree)
+{
+    for (const auto &i : tree.roots)
+        out << *i.second;
+
+    return out;
+}

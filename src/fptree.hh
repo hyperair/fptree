@@ -9,6 +9,9 @@
 
 namespace fpt
 {
+    class fptree;
+    std::ostream &operator<< (std::ostream &, const fptree &);
+
     class fptree
     {
     public:
@@ -44,7 +47,11 @@ namespace fpt
             nodeptr tail;
         };
         std::unordered_map<item_type, header>   headers;
+
+        friend std::ostream &operator<< (std::ostream &, const fptree &);
     };
+
+    std::ostream &operator << (std::ostream &, const fptree::node &);
 }
 
 #endif
