@@ -24,9 +24,7 @@ int main (int argc, char **argv)
 
     items.prune (db.size () * min_support);
 
-    fpt::ordered_itemset ordered_items (items);
-
-    fpt::fptree tree (ordered_items, db);
+    fpt::fptree tree (items.get_ordered (), db);
 
     std::cout << "File: " << filename << std::endl
               << "Number of nodes: " << tree.size () << std::endl
