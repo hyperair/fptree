@@ -2,6 +2,10 @@
 #include <string>
 #include <iostream>
 
+#include <itemset.hh>
+#include <transactions.hh>
+#include <types.hh>
+
 int main (int argc, char **argv)
 {
     if (argc != 3) {
