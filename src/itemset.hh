@@ -2,7 +2,7 @@
 #define ITEMSET_HH
 
 #include <unordered_map>
-#include <ctypes>
+#include <cstddef>
 #include <types.hh>
 
 namespace fpt
