@@ -1,7 +1,7 @@
 #ifndef TYPES_HH
 #define TYPES_HH
 
-namespace fptree
+namespace fpt
 {
     typedef int item_type;
 }
