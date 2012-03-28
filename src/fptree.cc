@@ -106,7 +106,8 @@ fptree::stats fptree::get_stats () const
     for (const auto &i : roots)
         traverse (i.second, 1, stats, total_fanout);
 
-    stats.average_fanout = double (total_fanout) / stats.size;
+    stats.average_fanout =
+        double (total_fanout) / (stats.size - stats.n_leaves);
 
     return stats;
 }
