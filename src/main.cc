@@ -6,6 +6,7 @@
 #include <transactions.hh>
 #include <types.hh>
 #include <parser.hh>
+#include <fptree.hh>
 
 int main (int argc, char **argv)
 {
