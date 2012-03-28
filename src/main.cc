@@ -15,11 +15,13 @@ int main (int argc, char **argv)
     double min_support = std::atof (argv[2]);
 
     fpt::transaction_database db = fpt::parse_file (filename);
-    fpt::itemset sorted_items = db.extract_itemset ();
+    fpt::itemset items = db.extract_itemset ();
 
-    sorted_items.prune (min_support);
+    items.prune (db.size () * min_support);
 
-    fpt::fptree tree (items, db);
+    fpt::ordered_itemset ordered_items (items);
+
+    fpt::fptree tree (ordered_items, db);
 
     std::cout << "File: " << filename << std::endl
               << "Number of nodes: " << tree.size () << std::endl
