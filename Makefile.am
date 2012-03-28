@@ -6,7 +6,9 @@ fptree_SOURCES =				\
 	src/main.cc				\
 	src/transactions.cc			\
 	src/transactions.hh			\
-	src/types.hh
+	src/types.hh				\
+	src/parser.hh				\
+	src/parser.cc
 
 fptree_CXXFLAGS = -std=c++0x
 fptree_CPPFLAGS = -Isrc

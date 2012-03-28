@@ -5,6 +5,7 @@
 #include <itemset.hh>
 #include <transactions.hh>
 #include <types.hh>
+#include <parser.hh>
 
 int main (int argc, char **argv)
 {
