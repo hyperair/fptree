@@ -67,6 +67,7 @@ fptree::fptree (ordered_itemset items,
         }
 
         current->increment_count ();
+        ++i;
 
         // Loop through the rest of the elements
         for (; i != item_order.end (); ++i) {
