@@ -130,6 +130,7 @@ fptree::stats::stats () :
 
 std::ostream &fpt::operator<< (std::ostream &out, const fptree::node &node)
 {
+    out << node.item << ',' << node.counter << std::endl << " {" << std::endl;
     for (const auto &i : node.item_order) {
         auto j = node.children.find (i.item);
 
@@ -139,11 +140,15 @@ std::ostream &fpt::operator<< (std::ostream &out, const fptree::node &node)
         }
     }
 
-    return out << node.item << " " << node.counter << std::endl;
+    out << "}" << std::endl;
+
+    return out;
 }
 
 std::ostream &fpt::operator<< (std::ostream &out, const fptree &tree)
 {
+    out << "{" << std::endl;
+
     for (const auto &i : tree.item_order) {
         auto j = tree.roots.find (i.item);
 
@@ -152,6 +157,8 @@ std::ostream &fpt::operator<< (std::ostream &out, const fptree &tree)
             out << *j->second;
         }
     }
+
+    out << "}" << std::endl;
 
     return out;
 }
