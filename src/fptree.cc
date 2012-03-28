@@ -9,10 +9,12 @@ using fpt::fptree;
 class fptree::node : public std::enable_shared_from_this<node>
 {
 public:
-    node (item_type item, nodeptr parent = nodeptr ()) :
+    node (const ordered_itemset & item_order,
+          item_type item, nodeptr parent = nodeptr ()) :
         item (item),
         counter (0),
-        parent (parent) {}
+        parent (parent),
+        item_order (item_order) {}
 
     nodeptr operator[] (item_type);
     void increment_count ()         {++counter;}
@@ -24,6 +26,8 @@ public:
     std::unordered_map<item_type, nodeptr>  children;
 
     nodeptr                                 next_sibling;
+
+    const ordered_itemset                  &item_order;
 };
 
 fptree::nodeptr fptree::node::operator[] (item_type item)
@@ -31,7 +35,7 @@ fptree::nodeptr fptree::node::operator[] (item_type item)
     nodeptr &retval = children[item];
 
     if (!retval)
-        retval = nodeptr (new node (item, shared_from_this ()));
+        retval = nodeptr (new node (item_order, item, shared_from_this ()));
 
     return retval;
 }
@@ -57,7 +61,7 @@ fptree::fptree (ordered_itemset items,
             nodeptr &root = roots[i->item];
 
             if (!root)
-                root = nodeptr (new node (i->item));
+                root = nodeptr (new node (item_order, i->item));
 
             current = root;
         }
@@ -125,16 +129,28 @@ fptree::stats::stats () :
 
 std::ostream &fpt::operator<< (std::ostream &out, const fptree::node &node)
 {
-    for (const auto &i : node.children)
-        out << *i.second;
+    for (const auto &i : node.item_order) {
+        auto j = node.children.find (i.item);
+
+        if (j != node.children.end ()) {
+            assert (j->second);
+            out << *j->second;
+        }
+    }
 
     return out << node.item << " " << node.counter << std::endl;
 }
 
 std::ostream &fpt::operator<< (std::ostream &out, const fptree &tree)
 {
-    for (const auto &i : tree.roots)
-        out << *i.second;
+    for (const auto &i : tree.item_order) {
+        auto j = tree.roots.find (i.item);
+
+        if (j != tree.roots.end ()) {
+            assert (j->second);
+            out << *j->second;
+        }
+    }
 
     return out;
 }
