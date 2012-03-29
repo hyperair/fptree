@@ -19,7 +19,7 @@ namespace fpt
     bool operator< (const item_with_count &, const item_with_count &);
     bool operator== (const item_with_count &, const item_with_count &);
 
-    typedef std::multiset<item_with_count> ordered_itemset;
+    typedef std::set<item_with_count> ordered_itemset;
 
 
     // An unordered set of items. Used for counting the frequency of each item.
