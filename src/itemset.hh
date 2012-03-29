@@ -46,7 +46,11 @@ namespace fpt
 // Inline definitions
 inline bool fpt::operator< (const item_with_count &a, const item_with_count &b)
 {
-    return a.count > b.count;   // descending order of count
+    if (a.count != b.count)
+        return a.count > b.count; // descending order of count
+
+    else
+        return a.item < b.item; // ascending order of item.
 }
 
 inline bool fpt::operator== (const item_with_count &a, const item_with_count &b)
