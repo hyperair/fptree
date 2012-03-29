@@ -13,4 +13,4 @@ fptree_SOURCES =				\
 	src/fptree.cc
 
 fptree_CXXFLAGS = -std=c++0x
-fptree_CPPFLAGS = -Isrc
+fptree_CPPFLAGS = -I$(top_srcdir)/src
