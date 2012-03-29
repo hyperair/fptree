@@ -17,7 +17,6 @@ namespace fpt
 
     // Operators for use with std::set
     bool operator< (const item_with_count &, const item_with_count &);
-    bool operator== (const item_with_count &, const item_with_count &);
 
     typedef std::set<item_with_count> ordered_itemset;
 
@@ -52,12 +51,5 @@ inline bool fpt::operator< (const item_with_count &a, const item_with_count &b)
     else
         return a.item < b.item; // ascending order of item.
 }
-
-inline bool fpt::operator== (const item_with_count &a, const item_with_count &b)
-{
-    assert (a.count == b.count);
-    return a.item == b.item;
-}
-
 
 #endif  // ITEMSET_HH
