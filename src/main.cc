@@ -3,14 +3,13 @@
 #include <iostream>
 #include <fstream>
 #include <chrono>
-#include <sys/time.h>
-#include <sys/resource.h>
 
 #include <itemset.hh>
 #include <transactions.hh>
 #include <types.hh>
 #include <parser.hh>
 #include <fptree.hh>
+#include <meminfo.hh>
 
 int main (int argc, char **argv)
 {
@@ -39,20 +38,17 @@ int main (int argc, char **argv)
 
     std::string dump_filename = filename + ".fptree";
 
-    rusage res_usage;
-    getrusage (RUSAGE_SELF, &res_usage);
-
-    std::cout << "File:             " << filename             << std::endl
-              << "FPtree dump file: " << dump_filename        << std::endl
-              << "Threshold:        " << min_support          << std::endl
-              << "Number of nodes:  " << stats.size           << std::endl
-              << "Number of leaves: " << stats.n_leaves       << std::endl
-              << "Height:           " << stats.height         << std::endl
-              << "Minimum fanout:   " << stats.min_fanout     << std::endl
-              << "Average fanout:   " << stats.average_fanout << std::endl
-              << "Maximum fanout:   " << stats.max_fanout     << std::endl
-              << "Runtime:          " << duration << "s"      << std::endl
-              << "Max. memory:      " << res_usage.ru_maxrss << "kB"
+    std::cout << "File:             " << filename               << std::endl
+              << "FPtree dump file: " << dump_filename          << std::endl
+              << "Threshold:        " << min_support            << std::endl
+              << "Number of nodes:  " << stats.size             << std::endl
+              << "Number of leaves: " << stats.n_leaves         << std::endl
+              << "Height:           " << stats.height           << std::endl
+              << "Minimum fanout:   " << stats.min_fanout       << std::endl
+              << "Average fanout:   " << stats.average_fanout   << std::endl
+              << "Maximum fanout:   " << stats.max_fanout       << std::endl
+              << "Runtime:          " << duration << "s"        << std::endl
+              << "Max. memory:      " << fpt::get_peakmem_kb () << "kB"
               << std::endl;
 
     {
