@@ -5,6 +5,8 @@
 /autom4te.cache
 /config.log
 /config.status
+/config.sub
+/config.guess
 /configure
 /depcomp
 /install-sh
