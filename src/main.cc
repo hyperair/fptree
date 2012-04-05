@@ -32,6 +32,7 @@ int main (int argc, char **argv)
     std::string dump_filename = filename + ".fptree";
 
     std::cout << "File: "               << filename             << std::endl
+              << "Threshold: "          << min_support          << std::endl
               << "Number of nodes: "    << stats.size           << std::endl
               << "Number of leaves:"    << stats.n_leaves       << std::endl
               << "Height: "             << stats.height         << std::endl
