@@ -5,6 +5,10 @@
 #include <memory>
 #include <sstream>
 
+#ifdef HAVE_CONFIG_H
+#   include <config.h>
+#endif
+
 using fpt::fptree;
 
 class fptree::node : public std::enable_shared_from_this<node>
@@ -129,6 +133,8 @@ fptree::stats::stats () :
 {}
 
 
+#ifdef WITH_PRETTY_TREE_PRINTING
+
 std::ostream &fpt::operator<< (std::ostream &out, const fptree::node &node)
 {
     out << node.item << " (f=" << node.counter << ")" << std::endl;
@@ -170,3 +176,35 @@ std::ostream &fpt::operator<< (std::ostream &out, const fptree &tree)
 
     return out;
 }
+
+#else
+
+std::ostream &fpt::operator<< (std::ostream &out, const fptree::node &node)
+{
+    for (const auto &i : node.item_order) {
+        auto j = node.children.find (i.item);
+
+        if (j != node.children.end ()) {
+            assert (j->second);
+            out << *j->second;
+        }
+    }
+
+    return out << node.item << " " << node.counter << std::endl;
+}
+
+std::ostream &fpt::operator<< (std::ostream &out, const fptree &tree)
+{
+    for (const auto &i : tree.item_order) {
+        auto j = tree.roots.find (i.item);
+
+        if (j != tree.roots.end ()) {
+            assert (j->second);
+            out << *j->second;
+        }
+    }
+
+    return out;
+}
+
+#endif  // WITH_PRETTY_TREE_PRINTING
